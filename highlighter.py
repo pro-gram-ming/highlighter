@@ -12,7 +12,7 @@ img = Image.open(sys.argv[1])
 w, h = img.width, img.height
 bmap = img.load()
 
-fuzz = (random.choice(range(0, w - 1)), random.choice(range(0, h - 1)))
+fuzz = (random.choice(range(0, w)), random.choice(range(0, h)))
 c = bmap[fuzz]
 
 def N(xy):
