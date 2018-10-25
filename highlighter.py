@@ -4,8 +4,6 @@ from PIL import Image
 import sys
 import random
 
-sys.setrecursionlimit(1000000)
-
 blu = (0, 0, 255, 255)
 
 img = Image.open(sys.argv[1])
@@ -36,15 +34,16 @@ def W(xy):
         return (x - 1, y)
 
 def floodfill(xy):
-    if bmap[xy] != c:
-        return
+    frontier = [xy]
 
-    bmap[xy] = blu
+    while(frontier):
+        xy = frontier.pop()
+        bmap[xy] = blu
 
-    for ab in (N(xy), S(xy), E(xy), W(xy)):
-        if ab != None:
-            floodfill(ab)
-    return
+        for ab in (N(xy), S(xy), E(xy), W(xy)):
+            # Check for image and fill area boundaries.
+            if ab != None and bmap[ab] == c:
+                frontier.append(ab)
 
 floodfill(fuzz)
 img.save(sys.argv[2])
