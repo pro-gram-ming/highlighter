@@ -37,15 +37,17 @@ def W(xy):
         return (x - 1, y)
 
 def floodfill(xy):
-    frontier = [xy]
+    frontier = [xy]  # Bag of pixels
+    dmap = {}  # Duplication map
 
     while(frontier):
         xy = frontier.pop()
         bmap[xy] = blu
+        dmap[xy] = True
 
         for ab in (N(xy), S(xy), E(xy), W(xy)):
-            # Check for image and fill area boundaries.
-            if ab != None and rgbcmp(bmap[ab], c) <= tolerance:
+            # Check for boundaries and duplication.
+            if ab != None and ab not in dmap and rgbcmp(bmap[ab], c) <= tolerance:
                 frontier.append(ab)
 
 floodfill(fuzz)
