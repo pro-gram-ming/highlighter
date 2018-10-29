@@ -4,7 +4,10 @@ from PIL import Image
 import sys
 import random
 
+from helpers.rgbcmp import rgbcmp
+
 blu = (0, 0, 255, 255)
+tolerance = 30
 
 img = Image.open(sys.argv[1])
 w, h = img.width, img.height
@@ -42,7 +45,7 @@ def floodfill(xy):
 
         for ab in (N(xy), S(xy), E(xy), W(xy)):
             # Check for image and fill area boundaries.
-            if ab != None and bmap[ab] == c:
+            if ab != None and rgbcmp(bmap[ab], c) <= tolerance:
                 frontier.append(ab)
 
 floodfill(fuzz)
